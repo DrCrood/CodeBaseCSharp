@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeBase.Algorithm.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,25 +9,6 @@ namespace CodeBase.Algoriths
 {
     public static class Compute
     {
-        public static bool IsPrime(int n)
-        {
-            if (n < 2)
-            {
-                return false;
-            }
-            int s = 2;
-            int e = (int)Math.Sqrt(n);
-
-            for (int k = s; k <= e; k++)
-            {
-                if (n % k == 0)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         public static int ReverseNumber(int i)
         {
             if (i < 0)
@@ -258,7 +240,7 @@ namespace CodeBase.Algoriths
                 npoints[i] = new int[3] { points[i][0], points[i][1], (points[i][0]-x)*(points[i][0]-x) + (points[i][1]-y)*(points[i][1]-y)};
             }
 
-            QuickSortObject(npoints, 0, npoints.Length-1);
+            Utility.QuickSortObject(npoints, 0, npoints.Length-1);
 
             for(int i = 0; i < k; i++)
             {
@@ -266,38 +248,6 @@ namespace CodeBase.Algoriths
             }
 
             return result;
-        }
-
-        public static void QuickSortObject(int[][] points, int start, int end)
-        {
-            if (start < end)
-            {
-                int pivot = Partition(points, start, end);
-                QuickSortObject(points, start, pivot - 1);
-                QuickSortObject(points, pivot + 1, end);
-            }
-        }
-
-        public static int Partition(int[][] a, int start, int end)
-        {
-            int index = start;
-
-            for (int i = start; i < end; i++)
-            {
-                if (a[i][2] <= a[end][2]) //Sort ascending
-                {
-                    int[] tmp = a[i];
-                    a[i] = a[index];
-                    a[index] = tmp;
-                    index++;
-                }
-            }
-
-            int[] t = a[index];
-            a[index] = a[end];
-            a[end] = t;
-
-            return index;
         }
 
         public static int SumSubarrayMins(int[] arr)
@@ -322,96 +272,6 @@ namespace CodeBase.Algoriths
 
 
             return re;
-        }
-
-        //Find the shortest path in a grid from point a to point b.
-        //The algorithm is like the BFS in Graph.
-        public static int ShortestPathInGrid(char[][] grid)
-        {
-            int row = grid.Length;
-            int col = grid[0].Length;
-
-            int[,] count = new int[row, col];
-            int[] person = new int[2];
-            List<int[]> food = new List<int[]>();
-            
-
-            for(int i=0; i<row; i++)
-            {
-                for(int j=0; j<col; j++)
-                {
-                    count[i,j] = -1;
-                    if (grid[i][j] == '*')
-                    {
-                        person[0] = i;
-                        person[1] = j;
-                    }
-                }
-            }
-
-            Queue <(int, int)> queue = new Queue<(int,int)>();
-            count[person[0], person[1]] = 0;
-            queue.Enqueue((person[0], person[1]));
-
-            while(queue.Count > 0)
-            {
-                (int i, int j) = queue.Dequeue();
-                if (i != 0)
-                {
-                    if (grid[i-1][j] == 'O' && count[i - 1, j] < 0 )
-                    {
-                        count[i-1, j] = count[i, j] + 1;
-                        queue.Enqueue((i-1, j));
-                    }
-                    if (grid[i-1][j] == '#')
-                    {
-                        return count[i, j] + 1;
-                    }
-                }
-
-                if (j != 0)
-                {
-                    if (grid[i][j - 1] == 'O' && count[i, j-1] < 0)
-                    {
-                        count[i, j-1] = count[i, j] + 1;
-                        queue.Enqueue((i,j-1));
-                    }
-                    if (grid[i][j - 1] == '#')
-                    {
-                        return count[i, j] + 1;
-                    }
-                }
-                if (i != row- 1)
-                {
-                    if (grid[i + 1][j] == 'O' && count[i + 1, j] < 0)
-                    {
-                        count[i + 1, j] = count[i, j] + 1;
-                        queue.Enqueue((i+1,j));
-                    }
-
-                    if (grid[i + 1][j] == '#')
-                    {
-                        return count[i, j] + 1;
-                    }
-                }
-
-                if (j != col - 1)
-                {
-                    if (grid[i][j + 1] == 'O' && count[i, j + 1] < 0)
-                    {
-                        count[i, j + 1] = count[i, j] + 1;
-                        queue.Enqueue((i, j + 1));
-                    }
-                    if (grid[i][j + 1] == '#')
-                    {
-                        return count[i, j] + 1;
-                    }
-                }
-
-            }
-            
-            return -1;
-
         }
 
 

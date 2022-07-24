@@ -28,7 +28,6 @@ namespace CodeBaseTests.Algorithm
 
             // Act
             var result = scheduling.MinMeetingRooms( meetings);
-
             // Assert
             Assert.Equal(4,result);
         }
