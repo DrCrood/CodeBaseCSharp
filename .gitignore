@@ -1,0 +1,6 @@
+.vs/*
+/CodeBase/obj/*
+/CodeBase/obj/Debug/*
+/CodeBase/bin/*
+/OOPTest_xUnit/obj/*
+/OOPTest_xUnit/bin/*
