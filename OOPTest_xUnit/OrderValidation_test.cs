@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using CodeBase.OOP;
 
-namespace OOPTest_xUnit
+namespace OOPTests
 {
     public class OrderValidation_test
     {

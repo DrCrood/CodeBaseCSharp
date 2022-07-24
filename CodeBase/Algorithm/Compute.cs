@@ -414,39 +414,7 @@ namespace CodeBase.Algoriths
 
         }
 
-        //Find the mimimum number of required meeting rooms according to list of meetings
-        //This will work better if the timing span is not big.
-        public static int MiniMumMeetingRooms_Simple(int[][] intervals)
-        {
-            int[] time = new int[1000001];
 
-            foreach (int[] m in intervals)
-            {
-                for(int i = m[0]; i<=m[1]; i++)
-                {
-                    time[i]++;
-                }
-            }
-
-            int max = 0;
-            foreach(int x in time)
-            {
-                if( x > max)
-                    max = x;
-            }
-
-
-            return max;
-        }
-
-        //Sort the event by starting time and build mini queue for the end time
-        public static int MiniMumMeetingRooms(int[][] intervals)
-        {
-            int max = 0;
-
-
-            return max;
-        }
         public static int FlipStringtoMonoIncreasing(string s)
         {
             int re = 0;

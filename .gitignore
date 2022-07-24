@@ -1,6 +1,10 @@
 .vs/*
 /CodeBase/obj/*
 /CodeBase/obj/Debug/*
+/CodeBaseTests/obj/*
+/CodeBaseTests/bin/*
+/CodeBaseTests/bin/*/*
+/CodeBaseTests/obj/Debug/*
 /CodeBase/bin/*
 /OOPTest_xUnit/obj/*
 /OOPTest_xUnit/bin/*
