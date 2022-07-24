@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
-namespace CodeBase
+namespace CodeBase.Algorithm
 {
     class Numbers
     {
-        public void  FindArmStrongNumbers()
+        public void FindArmStrongNumbers()
         {
             for (int i = 0; i < 100000; i++)
             {
                 int n = i;
                 int sum = 0;
-                while(true)
+                while (true)
                 {
                     if (n == 0)
                     {
@@ -41,7 +41,7 @@ namespace CodeBase
                     int digit = n % 10;
                     n = n / 10;
                     m = m * 10 + digit;
-                    if ( n ==0 && m == i)
+                    if (n == 0 && m == i)
                     {
                         Console.WriteLine($"Palindromic Number : {i}");
                     }
@@ -52,7 +52,7 @@ namespace CodeBase
         public void factorialA(int n)
         {
             BigInteger BI = new BigInteger(1);
-            for(int i=2; i<=n; i++)
+            for (int i = 2; i <= n; i++)
             {
                 BI = BigInteger.Multiply(BI, i);
             }
@@ -65,16 +65,16 @@ namespace CodeBase
             int[] arr = new int[100];
             arr[99] = 1;
 
-            for(int i=2; i<=n; i++)
+            for (int i = 2; i <= n; i++)
             {
                 for (int m = 0; m < 100; m++)
                 {
                     arr[m] = i * arr[m];
                 }
 
-                for (int m = 99; m>0; m--)
+                for (int m = 99; m > 0; m--)
                 {
-                    if(arr[m]>10)
+                    if (arr[m] > 10)
                     {
                         int temp = arr[m];
                         arr[m] = arr[m] % 10;
@@ -93,7 +93,7 @@ namespace CodeBase
             }
 
             StringBuilder builder = new StringBuilder();
-            for (int s = sindex; s< 100; s++)
+            for (int s = sindex; s < 100; s++)
             {
                 builder.Append(arr[s].ToString());
             }
