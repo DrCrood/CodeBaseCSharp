@@ -32,5 +32,28 @@ namespace CodeBaseTests.Algorithm
             Assert.Equal(4,result);
         }
 
+        [Fact]
+        public void TaskScheduleWithPreRequirements_ValidInputArray_ShouldReturnCorrectTaskOrder()
+        {
+            // Arrange
+            int[][] tasks = new int[][] { new int[] { 1, 0 }, new int[] { 1, 2 }, new int[] { 3, 1 }, new int[] { 3, 2 }, new int[] { 3, 4 } };
+
+            // Act
+            int[] result = Scheduling.TaskScheduleWithPreRequirements(5,tasks);
+            // Assert
+            Assert.Equal(new int[] { 0, 2, 1, 4, 3 }, result);
+        }
+
+        [Fact]
+        public void TaskScheduleWithPreRequirements_LoopedRequirement_ShouldReturnEmptyArray()
+        {
+            // Arrange
+            int[][] tasks = new int[][] { new int[] { 1, 0 }, new int[] { 2, 1 }, new int[] { 3, 2 }, new int[] { 0, 3 } };
+
+            // Act
+            int[] result = Scheduling.TaskScheduleWithPreRequirements(4, tasks);
+            // Assert
+            Assert.Equal(new int[] { }, result);
+        }
     }
 }

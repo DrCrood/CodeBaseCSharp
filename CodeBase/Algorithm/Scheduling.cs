@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeBase.Algoriths.Heap;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,14 +49,14 @@ namespace CodeBase.Algorithm
 
             for (int i = 0; i < n; i++)
             {
-                MinHeapInsert(endTimes, i, meetings[i][1]);
+                Heap.MinHeapInsert(endTimes, i, meetings[i][1]);
             }
             int rooms = 0;
             int maxrooms = 0;
             int hs = n;
             for (int i = 0; i < n;)
             {
-                if (meetings[i][0] < MinHeapCheck(endTimes))
+                if (meetings[i][0] < Heap.MinHeapCheck(endTimes))
                 {
                     rooms++;
                     i++;
@@ -66,67 +67,12 @@ namespace CodeBase.Algorithm
                 }
                 else
                 {
-                    MinHeapPop(endTimes, hs--);
+                    Heap.MinHeapPop(endTimes, hs--);
                     rooms--;
                 }
             }
 
             return maxrooms;
-        }
-
-        private static int Parent(int i)
-        {
-            double k = i / 2;
-            return (int)Math.Floor(k);
-        }
-
-        private static int MinHeapPop(int[] a, int heapSize)
-        {
-            int min = a[0];
-            a[0] = a[heapSize - 1];
-            heapSize--;
-            MinHeapify(a, 0, heapSize);
-            return min;
-        }
-
-        private static void MinHeapInsert(int[] a, int HeapSize, int key)
-        {
-            a[HeapSize] = Int32.MinValue;
-            HeapDecreaseKey(a, HeapSize, key);
-        }
-
-        private static void HeapDecreaseKey(int[] a, int i, int key)
-        {
-            a[i] = key;
-            while (i >= 0 && a[Parent(i)] > a[i])
-            {
-                int tmp = a[i];
-                a[i] = a[Parent(i)];
-                a[Parent(i)] = tmp;
-                i = Parent(i);
-            }
-
-        }
-        private static void MinHeapify(int[] array, int index, int heapSize)
-        {
-            //push the bigger node down the chain
-            int left = 2 * index;
-            int right = 2 * index + 1;
-            int minIndex = (left < heapSize && array[left] < array[index]) ? left : index;
-            minIndex = (right < heapSize && array[right] < array[minIndex]) ? right : minIndex;
-
-            if (minIndex != index)
-            {
-                int tmp = array[index];
-                array[index] = array[minIndex];
-                array[minIndex] = tmp;
-                MinHeapify(array, minIndex, heapSize);
-            }
-        }
-
-        public static int MinHeapCheck(int[] a)
-        {
-            return a[0];
         }
 
         private static void QuickSortObject(int[][] points, int start, int end)
@@ -160,5 +106,84 @@ namespace CodeBase.Algorithm
 
             return index;
         }
+    
+        /// <summary>
+        /// Find the finishing order of tasks with pre-task requirement.
+        /// Each task will have another task required to complete before it can be done.
+        /// Topological sorting algorithm in Graph. 
+        /// </summary>
+        /// <param name="numCourses"></param>
+        /// <param name="prerequisites"></param>
+        /// <returns></returns>
+        public static int[] TaskScheduleWithPreRequirements(int numCourses, int[][] prerequisites)
+        {
+            Job[] jobs = new Job[numCourses];
+            List<int> results = new List<int>();
+            for(int i = 0; i < numCourses; i++)
+            {
+                jobs[i] = new Job()
+                {
+                    Color = -1,
+                    Id = i,
+                };
+            }
+
+            foreach (int[] req in prerequisites)
+            {
+                jobs[req[0]].PreRequirements.Add(jobs[req[1]]);
+            }
+
+            int order = 0 ;
+            foreach(Job job in jobs)
+            {
+                if(job.Color < 0)
+                {
+                    if(DFS(jobs, job, ref order, results) < 0)
+                    {
+                        return Array.Empty<int>();
+                    }
+                }
+            }
+
+            return results.ToArray();
+        }
+
+        public static int DFS(Job[] jobs, Job job, ref int order, List<int> result)
+        {
+            order++;
+            job.StartOrder = order;
+            job.Color = 0;
+            foreach(Job j in job.PreRequirements)
+            {
+                if(j.Color == 0)
+                {
+                    return -1;
+                }
+                if(j.Color < 0)
+                {
+                   if( DFS(jobs, j, ref order, result) < 0)
+                    {
+                        return -1;
+                    }
+                }
+            }
+            job.Color = 1;
+            order++;
+            job.EndOrder = order;
+            result.Add(job.Id);
+            return 0;
+        }
+
+    }
+
+    public class Job
+    {
+        public int Id { get; set; }
+        public int StartOrder { get; set; }
+        public int EndOrder { get; set; }
+        public int Color { get; set; }
+        public int Parent { get; set; }
+        public List<Job> PreRequirements { get; set; } = new List<Job>();
+
     }
 }

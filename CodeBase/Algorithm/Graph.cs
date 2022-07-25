@@ -97,11 +97,64 @@ namespace CodeBase.Algorithm.Graph
                         return count[i, j] + 1;
                     }
                 }
+            }
+            return -1;
+        }
 
+        /// <summary>
+        /// Find the number of islands (represent by 1's) separated by water (0's) in a grid.
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <returns>The number of islands</returns>
+        public static int NumberOfIslands(char[][] grid)
+        {
+            int row = grid.Length;
+            int col = grid[0].Length;
+
+            int count = 0;
+
+            for(int i=0; i<row; i++)
+            {
+                for(int j=0; j<col; j++)
+                {
+                    if (grid[i][j] != '1')
+                    {
+                        continue;
+                    }
+                    
+                    CoverIsland(i, j, row, col, grid);
+                    count++;
+                }
             }
 
-            return -1;
+            return count;
+        }
 
+        private static void CoverIsland(int i, int j, int row, int col, char[][] grid)
+        {
+            grid[i][j] = '2';
+            if (i != 0 && grid[i - 1][j] == '1')
+            {
+                grid[i - 1][j] = '2';
+                CoverIsland(i - 1, j, row, col, grid);
+            }
+
+            if (j != 0 && grid[i][j - 1] == '1')
+            {
+                grid[i][j - 1] = '2';
+                CoverIsland(i, j - 1, row, col, grid);
+            }
+            if (i != row - 1 && grid[i + 1][j] == '1')
+            {
+                grid[i + 1][j] = '2';
+                CoverIsland(i + 1, j, row, col, grid);
+            }
+
+            if (j != col - 1 && grid[i][j + 1] == '1')
+            {
+                grid[i][j + 1] = '2';
+                CoverIsland(i, j + 1, row, col, grid);
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeBase.Algoriths
+namespace CodeBase.Algoriths.Heap
 {
     public static class Heap
     {
@@ -82,7 +82,6 @@ namespace CodeBase.Algoriths
                 a[Parent(i)] = tmp;
                 i = Parent(i);
             }
-
         }
 
         public static int Parent(int i)
@@ -98,6 +97,10 @@ namespace CodeBase.Algoriths
             heapSize--;
             MinHeapify(a, 0, heapSize);
             return min;
+        }
+        public static int MinHeapCheck(int[] a)
+        {
+            return a[0];
         }
     }
 }
