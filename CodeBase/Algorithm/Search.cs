@@ -9,6 +9,20 @@ namespace CodeBase.Algoriths
 {
     public class Search
     {
+        private struct Stock
+        {
+            public int present;
+            public int future;
+            public int profit;
+            public double profitR;
+            public Stock(int pre, int fu, int pro)
+            {
+                present = pre;
+                future = fu;
+                profit = pro;
+                profitR = (fu - pre) / (1.0 * pre);
+            }
+        }
 
         public static List<string> grid = new List<string>() { "7283455864", "6731158619", "8988242643", "3830589324", "2229505813", "5633845374", "6473530293", "7053106601", "0834282956", "4607924137" };
         public static List<string> pattern = new List<string>() { "9505", "3845", "3530" };
@@ -287,6 +301,90 @@ namespace CodeBase.Algoriths
             return false;
         }
 
+        public static void FindTheBestStockCombinationUnderBudget()
+        {
+            int[] present = new int[35] { 24, 34, 55, 67, 123, 200, 18, 25, 30, 35, 40, 45, 150, 188, 65, 79, 42, 33, 90, 129, 66, 80, 96, 8, 12, 5, 10, 15, 20, 25, 10, 20, 30, 40, 50 };
+            int[] future = new int[35] { 29, 30, 50, 69, 130, 202, 28, 35, 38, 25, 39, 59, 200, 200, 68, 85, 50, 30, 99, 138, 70, 85, 120, 28, 25, 9, 14, 22, 33, 44, 15, 26, 37, 48, 59 };
 
+            int budget = 150;
+            List<Stock> stocks = new List<Stock>();
+            int n = present.Length;
+            for (int i = 0; i < n; i++)
+            {
+                if (future[i] - present[i] > 0)
+                {
+                    stocks.Add(new Stock(present[i], future[i], future[i] - present[i]));
+                }
+            }
+        }
+
+        public static void FindDivisions()
+        {
+            int[] a = new int[] { 4, 15 };
+            a = new int[] { 4, 4, 4, 4 };
+            a = new int[] { 2, 2, 3 };
+            a = new int[] { 2, 2, 1, 2, 3, 5 };
+            a = new int[] { 1, 2, 3, 1, 1, 1 };
+            a = new int[] { 4, 17, 18, 3, 2, 10, 9, 5, 5, 5, 1, 5, 10, 1, 10 };
+            a = new int[] { 1, 1, 1, 1, 1, 1, 3, 3, 3, 5, 5, 4, 1, 6, 8, 1, 1, 2, 5, 4, 3, 11, 1, 3, 3, 8, 4, 5, 6, 3, 1, 4, 8, 1, 2, 4, 4, 3, 3, 1 };
+            int max = -1;
+            int min = 1000000;
+            foreach (int i in a)
+            {
+                if (i < min)
+                {
+                    min = i;
+                }
+                if (i > max)
+                {
+                    max = i;
+                }
+            }
+
+            if (max == min)
+            {
+                Console.WriteLine("[{0}]", string.Join(", ", a));
+                return;
+            }
+
+            int groupSize = max;
+            int index = 0;
+            int ops = 0;
+            int groupSum = 0;
+            for (int i = 0; i < a.Length; i++)
+            {
+                groupSum = 0;
+                while (groupSum < groupSize)
+                {
+                    groupSum += a[i];
+                    i++;
+                    if (i == a.Length)
+                    {
+                        break;
+                    }
+                    ops++;
+                }
+
+                if (groupSum == groupSize)
+                {
+                    if (i == a.Length)
+                    {
+                        Console.WriteLine(groupSize);
+                    }
+                    i--;
+                    continue;
+                }
+
+                if (i == a.Length && groupSum < groupSize)
+                {
+                    groupSize += groupSum;
+                }
+                else
+                {
+                    groupSize = groupSum;
+                }
+                i = -1;
+            }
+        }
     }
 }

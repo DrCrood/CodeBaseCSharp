@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace CodeBase
+namespace CodeBase.DataStructure
 {
-    class Alpha
+    public class Alpha
     {
         public Alpha() : this(10)
         {
@@ -35,7 +35,7 @@ namespace CodeBase
             Console.WriteLine(direction.all.ToString());
             Console.WriteLine(good.ToString());
 
-            Func<int,string> testdelegate = (int x) => { return x*x + " times"; };
+            Func<int, string> testdelegate = (x) => { return x * x + " times"; };
 
             Console.WriteLine(testdelegate(9));
         }
@@ -45,9 +45,9 @@ namespace CodeBase
         {
             List<int> IntList = new List<int>();
 
-            for(int i=3; i<9; i++)
+            for (int i = 3; i < 9; i++)
             {
-                IntList.Add(i*i);
+                IntList.Add(i * i);
             }
 
             IEnumerator<int> enu = IntList.GetEnumerator();
@@ -106,53 +106,22 @@ namespace CodeBase
             return (age, name);
         }
 
-
-        int nbits = 0;
-                        
-        public void divide(int num)
-        {
-            DateTime start = DateTime.Now;
-            while (num != 0)
-            {
-                int n = num % 2;
-                nbits += n;
-                num = (num - n) / 2;
-            }
-            Console.WriteLine(nbits + "  time(ms) = " + (DateTime.Now - start).TotalMilliseconds);
-        }
-
-        public void shift(int num)
-        {
-            DateTime start = DateTime.Now;
-            start = DateTime.Now;
-            nbits = 0;
-            for (int k = 0; k < 1; k++)
-            {
-                while (num != 0)
-                {
-                    nbits += (num & 1);
-                    num >>= 1;
-                }
-            }
-            Console.WriteLine(nbits + "  time(ms) = " + (DateTime.Now - start).TotalMilliseconds);
-        }
-
         public void evenodd()
         {
             int n = 20;
             Random ran = new Random();
             int[] a = new int[n];
-            for(int i= 0; i< n; i++)
+            for (int i = 0; i < n; i++)
             {
-                a[i] = ran.Next(1,100);
+                a[i] = ran.Next(1, 100);
             }
             int even = 0;
             int loop = 0;
             int odd = a.Length - 1;
-            while(even < odd)
+            while (even < odd)
             {
                 loop++;
-                if(a[even]%2 == 0)
+                if (a[even] % 2 == 0)
                 {
                     even++;
                 }
@@ -170,12 +139,12 @@ namespace CodeBase
 
         public void printSpiral(int n)
         {
-            int[,] a = new int[n,n];
-            for(int i=0; i<n; i++)
+            int[,] a = new int[n, n];
+            for (int i = 0; i < n; i++)
             {
-                for(int j=0; j<n;j++)
+                for (int j = 0; j < n; j++)
                 {
-                    a[i,j] = -1;
+                    a[i, j] = -1;
                 }
             }
 
@@ -183,18 +152,18 @@ namespace CodeBase
             int C = 0;
             int index = 1;
             int direction = 1;
-            while(index <= n*n)
+            while (index <= n * n)
             {
-                if(a[R,C] < 0)
+                if (a[R, C] < 0)
                 {
                     a[R, C] = index;
                     index++;
                 }
 
-                if(direction == 1)
+                if (direction == 1)
                 {
                     C++;
-                    if((C == n)||(a[R,C]>0))
+                    if (C == n || a[R, C] > 0)
                     {
                         C--;
                         R++;
@@ -206,7 +175,7 @@ namespace CodeBase
                 if (direction == 2)
                 {
                     R++;
-                    if ((R == n) || (a[R, C] > 0))
+                    if (R == n || a[R, C] > 0)
                     {
                         R--;
                         C--;
@@ -218,7 +187,7 @@ namespace CodeBase
                 if (direction == 3)
                 {
                     C--;
-                    if ((C == -1) || (a[R, C] > 0))
+                    if (C == -1 || a[R, C] > 0)
                     {
                         C++;
                         R--;
@@ -230,7 +199,7 @@ namespace CodeBase
                 if (direction == 4)
                 {
                     R--;
-                    if ((R == -1) || (a[R, C] > 0))
+                    if (R == -1 || a[R, C] > 0)
                     {
                         R++;
                         C++;
@@ -257,7 +226,7 @@ namespace CodeBase
             Random ran = new Random();
             int av = 0;
             int i = 0;
-            for(i=0; i<n; i++)
+            for (i = 0; i < n; i++)
             {
                 int v = ran.Next(1, 100);
                 a[i] = v;
@@ -265,10 +234,10 @@ namespace CodeBase
             }
             av /= n;
             i = 0;
-            int k = n-1;
-            while( i < k)
+            int k = n - 1;
+            while (i < k)
             {
-                if(a[i] < av)
+                if (a[i] < av)
                 {
                     i++;
                 }
@@ -283,119 +252,15 @@ namespace CodeBase
             Console.WriteLine("[{0}]", string.Join(", ", a));
         }
 
-        public void AddArrayDigit(int n)
-        {
-            int[] a = new int[n];
-            Random ran = new Random();
-            for(int i=0; i<n;i++)
-            {
-                a[i] = ran.Next(0, 10);
-            }
-            Console.WriteLine("[{0}]", string.Join(", ", a));
-            int k = n - 1;
-            while ( true)
-            {
-                a[k]++;
-                if(a[k] == 10)
-                {
-                    a[k] = 0;
-                    k--;
-                    if (k < 0)
-                    {
-                        a[0] = 0;
-                        int[] b = new int[n];
-                        for (int i = 0; i < n; i++)
-                        {
-                            b[i] = a[i];
-                        }
-                        a = new int[n + 1];
-                        for (int i = 0; i < n; i++)
-                        {
-                            a[i + 1] = b[i];
-                        }
-                        a[0] = 1;
-                        break;
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
-            Console.WriteLine("[{0}]", string.Join(", ", a));
-        }
-
-        public void removeDuplicates(int n)
-        {
-            int[] a = new int[n];
-            Random ran = new Random();
-            for(int i=0; i<n;i++)
-            {
-                a[i] = ran.Next(0, 20);
-            }
-            Console.WriteLine("[{0}]", string.Join(", ", a));
-
-            for(int i=n-1; i>=0; i--)
-            {
-                for(int k=0;k<i;k++)
-                {
-                    if (a[k + 1] < a[k])
-                    {
-                        int tmp = a[k];
-                        a[k] = a[k + 1];
-                        a[k + 1] = tmp;
-                    }
-                }
-            }
-            Console.WriteLine("[{0}]", string.Join(", ", a));
-
-            int curr = -100000;
-            int vindex = 0;
-            for(int i = 0; i < n; i++)
-            {
-                if( a[i] > curr)
-                {
-                    curr = a[i];
-                    continue;
-                }
-                else
-                {
-                    vindex = i;
-                    bool end = true;
-                    for(int k=i; k<n; k++)
-                    {
-                        if(a[k] > curr)
-                        {
-                            curr = a[k];
-                            a[vindex] = a[k];
-                            end = false;
-                            break;
-                        }
-                    }
-                    if(end)
-                    {
-                        break;
-                    }
-                }
-
-                Console.WriteLine("[{0}]", string.Join(", ", a));
-            }
-
-            for (int i = vindex; i < n; i++)
-            {
-                a[i] = 0;
-            }
-            Console.WriteLine("[{0}]", string.Join(", ", a));
-        }
 
         public void MaxProfitWithDayRange(int days)
         {
             int[] a = new int[60];
             Random ran = new Random();
-            for(int i=0; i<60;i++)
+            for (int i = 0; i < 60; i++)
             {
                 a[i] = ran.Next(100, 200);
-                while(i > 0 && Math.Abs(a[i]-a[i-1])>20 )
+                while (i > 0 && Math.Abs(a[i] - a[i - 1]) > 20)
                 {
                     a[i] = ran.Next(100, 200);
                 }
@@ -405,25 +270,25 @@ namespace CodeBase
             int curIndex = 0;
             int[] min = new int[60];
             int[] minIndex = new int[60];
-            for(int i=0; i<60; i++)
+            for (int i = 0; i < 60; i++)
             {
-                if(i-curIndex > days)
+                if (i - curIndex > days)
                 {
                     curMin = 100000;
                     for (int d = 0; d < days; d++)
                     {
-                        if (a[i-d] < curMin)
+                        if (a[i - d] < curMin)
                         {
-                            min[i] = a[i-d];
+                            min[i] = a[i - d];
                             minIndex[i] = i - d;
-                            curMin = a[i-d];
-                            curIndex = i-d;
+                            curMin = a[i - d];
+                            curIndex = i - d;
                         }
                     }
                     continue;
                 }
-                
-                if(a[i] < curMin)
+
+                if (a[i] < curMin)
                 {
                     min[i] = a[i];
                     minIndex[i] = i;
@@ -442,7 +307,7 @@ namespace CodeBase
             int buy = 0;
             int[] pro = new int[60];
             int profit = 0;
-            for (int j=0; j<60;j++)
+            for (int j = 0; j < 60; j++)
             {
                 pro[j] = a[j] - min[j] > 0 ? a[j] - min[j] : 0;
                 if (a[j] - min[j] > profit)
@@ -461,12 +326,12 @@ namespace CodeBase
             //get random n samples from a pool
             int[] a = new int[50];
             Random ran = new Random();
-            for(int i=0; i< 50; i++)
+            for (int i = 0; i < 50; i++)
             {
                 a[i] = i;
             }
 
-            for (int j=0; j<n; j++)
+            for (int j = 0; j < n; j++)
             {
                 int r = ran.Next(j, 50);
                 int tmp = a[r];
@@ -474,7 +339,7 @@ namespace CodeBase
                 a[j] = tmp;
             }
             int[] sample = new int[n];
-            for(int k=0; k<n; k++)
+            for (int k = 0; k < n; k++)
             {
                 sample[k] = a[k];
             }
@@ -482,11 +347,11 @@ namespace CodeBase
             Console.WriteLine("[{0}]", string.Join(", ", sample));
         }
 
-        public void converter(string sinput = "", int iinput = 0 )
+        public void converter(string sinput = "", int iinput = 0)
         {
-            if(sinput.Length < 1)
+            if (sinput.Length < 1)
             {
-                if(iinput == 0)
+                if (iinput == 0)
                 {
                     Console.WriteLine("0");
                 }
@@ -495,7 +360,7 @@ namespace CodeBase
                     bool neg = iinput < 0;
                     if (neg) iinput *= -1;
                     StringBuilder builder = new StringBuilder();
-                    while(iinput != 0)
+                    while (iinput != 0)
                     {
                         builder.Append((char)('0' + iinput % 10));
                         iinput /= 10;
@@ -503,7 +368,7 @@ namespace CodeBase
                     if (neg) builder.Append('-');
                     char[] c = builder.ToString().ToCharArray();
                     Array.Reverse(c);
-                    Console.WriteLine("String = " + new string(c) );
+                    Console.WriteLine("String = " + new string(c));
 
                 }
             }
@@ -511,7 +376,7 @@ namespace CodeBase
             {
                 bool neg = sinput[0] == '-';
                 int result = 0;
-                for (int k = neg ? 1 : 0; k < sinput.Length;  k++)
+                for (int k = neg ? 1 : 0; k < sinput.Length; k++)
                 {
                     int d = sinput[k] - '0';
                     result = result * 10 + d;
@@ -522,12 +387,12 @@ namespace CodeBase
 
         }
 
-        public double WinningProbability(int previousWon, int previousLoss,int gameLeft, int MustWin)
+        public double WinningProbability(int previousWon, int previousLoss, int gameLeft, int MustWin)
         {
             double p;
             double sumpro = 0.0;
             double weight = 0.0;
-            for(int i = 0; i<= 100000; i++)
+            for (int i = 0; i <= 100000; i++)
             {
                 //find the most probable winning chance of single game
                 p = i * 0.00001;
@@ -537,10 +402,10 @@ namespace CodeBase
             p = sumpro / weight;
             double wp = 0.0;
             sumpro = 0.0;
-            for (int w = MustWin; w<=gameLeft; w++)
+            for (int w = MustWin; w <= gameLeft; w++)
             {
                 //sum of probabilitied that winning w games or more
-                sumpro += Math.Pow(p, w) * Math.Pow(1 - p, gameLeft - w) * permu(gameLeft,w);
+                sumpro += Math.Pow(p, w) * Math.Pow(1 - p, gameLeft - w) * permu(gameLeft, w);
             }
 
             return sumpro;
@@ -552,19 +417,19 @@ namespace CodeBase
             long pt = 1;
             long pq = 1;
             long pp = 1;
-            for(int i=1;i<=t;i++)
+            for (int i = 1; i <= t; i++)
             {
                 pt = pt * i;
             }
-            for(int j = 1; j <= p; j++)
+            for (int j = 1; j <= p; j++)
             {
                 pp = pp * j;
             }
-            for(int k = 1; k<=q; k++)
+            for (int k = 1; k <= q; k++)
             {
                 pq = pq * k;
             }
-            return (int)(pt / (pp*pq));
+            return (int)(pt / (pp * pq));
         }
 
 
@@ -572,22 +437,22 @@ namespace CodeBase
         {
             StringBuilder builer = new StringBuilder();
             Console.WriteLine(input);
-            while(num > 0)
+            while (num > 0)
             {
                 char s = input[0];
                 int N = 1;
-                for(int i=1; i<= input.Length; i++)
+                for (int i = 1; i <= input.Length; i++)
                 {
-                    if( i == input.Length)
+                    if (i == input.Length)
                     {
                         builer.Append(N);
-                        builer.Append(input[i-1]);
+                        builer.Append(input[i - 1]);
                         break;
                     }
                     if (input[i] != s)
                     {
                         builer.Append(N);
-                        builer.Append(input[i-1]);
+                        builer.Append(input[i - 1]);
                         s = input[i];
                         N = 1;
                     }
@@ -609,36 +474,36 @@ namespace CodeBase
             int value = 0;
             int len = sub.Length;
 
-            for(int i=0; i<len; i++)
+            for (int i = 0; i < len; i++)
             {
                 value += sub[i];
                 //value += (i+1) * sub[i]; //this requires the recalculation of whole substring tvalue in string for loop but reduce false match like 'ABC' and 'ACB'.
             }
 
             int tvalue = 0;
-            for(int k=0; k<len-1; k++)
+            for (int k = 0; k < len - 1; k++)
             {
                 tvalue += sstring[k];
             }
             int last = 0;
 
-            for (int j=0; j<=sstring.Length-len; j++)
+            for (int j = 0; j <= sstring.Length - len; j++)
             {
-                tvalue += (sstring[j + len-1] - last);
-                last = (int)sstring[j];
-                if(tvalue == value)
+                tvalue += sstring[j + len - 1] - last;
+                last = sstring[j];
+                if (tvalue == value)
                 {
                     bool match = true;
-                    for(int m=0;m<len;m++)
+                    for (int m = 0; m < len; m++)
                     {
-                        if(sub[m] != sstring[j+m])
+                        if (sub[m] != sstring[j + m])
                         {
                             match = false;
                             break;
                         }
                     }
-                    if(match)
-                    Console.WriteLine(j + " : " + sstring.Substring(j,len));
+                    if (match)
+                        Console.WriteLine(j + " : " + sstring.Substring(j, len));
                 }
             }
         }

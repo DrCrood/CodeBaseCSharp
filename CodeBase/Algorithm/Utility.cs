@@ -103,5 +103,54 @@ namespace CodeBase.Algorithm
 
             return index;
         }
+
+        public static void MergeSort(int[] a, int s, int e)
+        {
+            if (s < e)
+            {
+                int q = (s + e) / 2;
+                MergeSort(a, s, q);
+                MergeSort(a, q + 1, e);
+                Merge(a, s, q, e);
+            }
+        }
+
+        private static void Merge(int[] a, int s, int m, int e)
+        {
+            int nleft = m - s + 1;
+            int nright = e - m;
+            int[] left = new int[nleft + 1];
+            int[] right = new int[nright + 1];
+
+            int i = 0;
+            int j = 0;
+            for (i = 0; i < nleft; i++)
+            {
+                left[i] = a[s + i];
+            }
+            for (j = 0; j < nright; j++)
+            {
+                right[j] = a[m + 1 + j];
+            }
+
+            left[nleft] = int.MaxValue;
+            right[nright] = int.MaxValue;
+
+            i = 0;
+            j = 0;
+            for (int n = s; n <= e; n++)
+            {
+                if (left[i] > right[j])
+                {
+                    a[n] = right[j];
+                    j++;
+                }
+                else
+                {
+                    a[n] = left[i];
+                    i++;
+                }
+            }
+        }
     }
 }

@@ -16,7 +16,6 @@ namespace CodeBase
             watch.Start();
             watch.Stop();
 
-            Sorting.FindDivisions();
         }
     }
 }

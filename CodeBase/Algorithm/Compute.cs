@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,64 +9,6 @@ namespace CodeBase.Algorithm
 {
     public static class Compute
     {
-        public static int ReverseNumber(int i)
-        {
-            if (i < 0)
-            {
-                return 0;
-            }
-            int r = 0;
-            while (i > 0)
-            {
-                int d = i % 10;
-                r = r * 10 + d;
-                i = (i - d) / 10;
-            }
-            return r;
-        }
-
-        public static int[] SquentialNumbers(int low, int high)
-        {
-            List<int> result = new List<int>();
-
-            for (int i = low; i <= high; i++)
-            {
-                if (IsSequential(i))
-                {
-                    result.Add(i);
-                }
-            }
-            return result.ToArray();
-        }
-
-        public static bool IsSequential(int n)
-        {
-            if (n < 11)
-            {
-                return false;
-            }
-            int predig = -1;
-            while (n > 0)
-            {
-                int d = -1;
-                d = n % 10;
-                n = (n - d) / 10;
-                if (predig < 0)
-                {
-                    predig = d;
-                }
-                else
-                {
-                    if (predig - d != 1)
-                    {
-                        return false;
-                    }
-                    predig = d;
-                }
-            }
-            return true;
-        }
-
         public static int MinimumSwaps(int[] data)
         {
             int sum = 0;
@@ -104,7 +47,68 @@ namespace CodeBase.Algorithm
             return minSwaps;
         }
 
-        public static int RottingOranges(int[][] orgs)
+        /// <summary>
+        /// Group anagram strings together in a list of strings
+        /// </summary>
+        /// <param name="strs"></param>
+        /// <returns></returns>
+        public static IList<IList<string>> GroupAnagrams(string[] strings)
+        {
+            int size = strings.Length;
+            IList<IList<string>> result = new List<IList<string>>();
+
+            int[] counter = new int[26];
+
+            Dictionary<string,List<int>> dict = new Dictionary<string, List<int>>();
+            StringBuilder sb = new StringBuilder();
+
+            for(int n=0; n<size; n++)
+            {
+                sb.Clear();
+                GetReorderedString(strings[n], sb, counter);
+                string key = sb.ToString();
+                if (dict.ContainsKey(key))
+                {
+                    dict[key].Add(n);
+                }
+                else
+                {
+                    dict[key] = new List<int> { n};
+                }                
+            }
+
+            foreach(KeyValuePair<string,List<int>> pair in dict)
+            {
+                List<string> sl = new List<string>();
+                foreach(int i in pair.Value)
+                {
+                    sl.Add(strings[i]);
+                }
+                result.Add(sl);
+            }
+
+            return result;
+        }
+
+        public static void GetReorderedString(string s, StringBuilder sb, int[] counter)
+        {
+            for (int i = 0; i < 26; i++) counter[i] = 0;
+
+            foreach (char c in s)
+            {
+                counter[c - 97]++;
+            }
+
+            for(int i=0; i<26; i++)
+            {
+                for(int j=0; j < counter[i]; j++)
+                {
+                    sb.Append((char)(i+97));
+                }
+            }
+        }
+
+        public static int RottingOranges_Simple(int[][] orgs)
         {
             int row = orgs.Length;
             int col = orgs[0].Length;
