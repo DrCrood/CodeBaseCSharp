@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CodeBase.Algoriths
 {
-    internal class Search
+    public class Search
     {
 
         public static List<string> grid = new List<string>() { "7283455864", "6731158619", "8988242643", "3830589324", "2229505813", "5633845374", "6473530293", "7053106601", "0834282956", "4607924137" };
@@ -204,6 +204,89 @@ namespace CodeBase.Algoriths
 
             return new int[3] { min, prices[mins],prices[mine] };
         }
+
+        public static IList<string> SearchWordsInGrid(char[][] board, string[] words)
+        {
+            List<string> result = new List<string>();
+
+            foreach (string word in words)
+            {
+                if(WordExistsInGrid(board,word))
+                {
+                    result.Add(word);
+                }
+            }
+
+            return result;
+        }
+
+        public static bool WordExistsInGrid(char[][] board, string word)
+        {
+            int row = board.Length;
+            int col = board[0].Length;
+
+            List<(int, int)> startp = new List<(int, int)>();
+            int[,] count = new int[row, col];
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < col; j++)
+                {
+                    if (board[i][j] == word[0])
+                    {
+                        startp.Add((i, j));
+                    }
+                }
+            }
+
+            foreach ((int i, int j) in startp)
+            {
+                if (FindTheNextCharInTheWord(i, j, row, col, 1, board, word, count))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool FindTheNextCharInTheWord(int i, int j, int row, int col, int index, char[][] board, string word, int[,] count)
+        {
+            if (index == word.Length)
+            {
+                return true;
+            }
+            count[i,j] = 1;
+            if (i != 0 && count[i-1,j] < 1 && board[i - 1][j] == word[index])
+            {
+                if (FindTheNextCharInTheWord(i - 1, j, row, col, index + 1, board, word, count))
+                {
+                    return true;
+                }
+            }
+            if (j != 0 && count[i, j-1] < 1 && board[i][j - 1] == word[index])
+            {
+                if (FindTheNextCharInTheWord(i, j - 1, row, col, index + 1, board, word, count))
+                {
+                    return true;
+                }
+            }
+            if (i != row - 1 && count[i+1, j] < 1 && board[i + 1][j] == word[index])
+            {
+                if (FindTheNextCharInTheWord(i + 1, j, row, col, index + 1, board, word, count))
+                {
+                    return true;
+                }
+            }
+            if (j != col - 1 && count[i, j+1] < 1 && board[i][j + 1] == word[index])
+            {
+                if (FindTheNextCharInTheWord(i, j + 1, row, col, index + 1, board, word, count))
+                {
+                    return true;
+                }
+            }
+            count[i, j] = 0;
+            return false;
+        }
+
 
     }
 }

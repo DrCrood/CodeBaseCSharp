@@ -701,29 +701,6 @@ namespace CodeBase
             }
         }
 
-        public void linkedList()
-        {
-            int[] a = new int[10];
-            for(int i=0; i<10; i++)
-            {
-                a[i] = i;
-            }
-            LinkedList<int> ll = new LinkedList<int>(a);
-
-            LinkedListNode<int> current = ll.First;
-            
-            while (true)
-            {
-                Console.WriteLine(current.Value);
-                current = current.Next;
-                if(current.Next == null)
-                {
-                    Console.WriteLine(current.Value);
-                    break;
-                }
-            }
-        }
-
         public void printPattern(int n, int k, int l)
         {
             //n dots total and k to l dots pattern;
