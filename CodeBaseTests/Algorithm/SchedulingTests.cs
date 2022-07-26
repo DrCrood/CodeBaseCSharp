@@ -3,7 +3,7 @@ using Moq;
 using System;
 using Xunit;
 
-namespace CodeBaseTests.Algorithm
+namespace CodeBaseTests.Algorithm.Test
 {
     public class SchedulingTests
     {

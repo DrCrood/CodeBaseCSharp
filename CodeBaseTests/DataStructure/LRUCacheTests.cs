@@ -3,7 +3,7 @@ using Moq;
 using System;
 using Xunit;
 
-namespace CodeBaseTests.DataStructure
+namespace CodeBaseTests.DataStructure.Test
 {
     public class LRUCacheTests
     {

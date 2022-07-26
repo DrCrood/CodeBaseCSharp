@@ -1,11 +1,10 @@
-﻿using CodeBase.Algorithm.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeBase.Algoriths
+namespace CodeBase.Algorithm
 {
     public static class Compute
     {
@@ -240,7 +239,7 @@ namespace CodeBase.Algoriths
                 npoints[i] = new int[3] { points[i][0], points[i][1], (points[i][0]-x)*(points[i][0]-x) + (points[i][1]-y)*(points[i][1]-y)};
             }
 
-            Utility.QuickSortObject(npoints, 0, npoints.Length-1);
+            Utility.QuickSort2D(npoints,2, 0, npoints.Length-1);
 
             for(int i = 0; i < k; i++)
             {

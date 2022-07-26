@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CodeBase.Algorithm
 {
@@ -45,7 +44,7 @@ namespace CodeBase.Algorithm
         {
             int n = meetings.Length;
             int[] endTimes = new int[n];
-            QuickSortObject(meetings, 0, n - 1);
+            Utility.QuickSort2D(meetings,0, 0, n - 1);
 
             for (int i = 0; i < n; i++)
             {
@@ -75,38 +74,7 @@ namespace CodeBase.Algorithm
             return maxrooms;
         }
 
-        private static void QuickSortObject(int[][] points, int start, int end)
-        {
-            if (start < end)
-            {
-                int pivot = Partition(points, start, end);
-                QuickSortObject(points, start, pivot - 1);
-                QuickSortObject(points, pivot + 1, end);
-            }
-        }
-
-        private static int Partition(int[][] a, int start, int end)
-        {
-            int index = start;
-
-            for (int i = start; i < end; i++)
-            {
-                if (a[i][0] <= a[end][0]) //Sort ascending
-                {
-                    int[] tmp = a[i];
-                    a[i] = a[index];
-                    a[index] = tmp;
-                    index++;
-                }
-            }
-
-            int[] t = a[index];
-            a[index] = a[end];
-            a[end] = t;
-
-            return index;
-        }
-    
+   
         /// <summary>
         /// Find the finishing order of tasks with pre-task requirement.
         /// Each task will have another task required to complete before it can be done.

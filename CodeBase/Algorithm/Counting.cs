@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeBase.Algoriths
+namespace CodeBase.Algorithm
 {
     internal class Counting
     {
@@ -24,7 +24,7 @@ namespace CodeBase.Algoriths
                 arr[i] = expenditure[i];
             }
 
-            QuickSort(arr, 0, d - 1);
+            Utility.QuickSort(arr, 0, d - 1);
 
             int mlow = (int)(Math.Ceiling((double)d / 2)) - 1;
             int mup = (int)(Math.Floor((double)d / 2));
@@ -100,38 +100,6 @@ namespace CodeBase.Algoriths
             }
 
             return notices;
-        }
-
-        public static void QuickSort(int[] a, int start, int end)
-        {
-            if (start < end)
-            {
-                int pivot = Partition(a, start, end);
-                QuickSort(a, start, pivot - 1);
-                QuickSort(a, pivot + 1, end);
-            }
-        }
-
-        public static int Partition(int[] a, int start, int end)
-        {
-            int index = start;
-
-            for (int i = start; i < end; i++)
-            {
-                if (a[i] <= a[end]) //Sort ascending
-                {
-                    int tmp = a[i];
-                    a[i] = a[index];
-                    a[index] = tmp;
-                    index++;
-                }
-            }
-
-            int t = a[index];
-            a[index] = a[end];
-            a[end] = t;
-
-            return index;
         }
 
         //This method works only of the input list has a fixed number range
@@ -217,7 +185,7 @@ namespace CodeBase.Algoriths
         public static int  CountPairsInList(int k, int[] arr)
         {
             int size = arr.Length;
-            QuickSort(arr, 0, size - 1);
+            Utility.QuickSort(arr, 0, size - 1);
 
             int i = 0;
             int j = 0;

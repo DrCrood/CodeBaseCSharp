@@ -107,28 +107,6 @@ namespace CodeBase
         }
 
 
-        public static double sqrt(double n)
-        {
-            bool neg = false;
-            if (n < 0)
-            {
-                n = -n;
-                neg = true;
-            }
-            double error = 1e-12;
-            double root = 0.1 * n;
-            double rootSqrt = root * root;
-            while (rootSqrt - n > error || rootSqrt - n < -error)
-            {
-                Console.WriteLine(root);
-                root = 0.5 * (root + n / root);
-                rootSqrt = root * root;
-            }
-
-            return root;
-        }
-
-
         int nbits = 0;
                         
         public void divide(int num)
@@ -345,42 +323,6 @@ namespace CodeBase
                 }
             }
             Console.WriteLine("[{0}]", string.Join(", ", a));
-        }
-
-        public void testPrime(int n)
-        {
-            int k = 0;
-            bool prime = true; 
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
-            int[] a = new int[n];
-            for(int i = 0; i<n; i++)
-            {
-
-            }
-            for (int i=17; i< n; i+=2)
-            {
-                if(i%3==0 || i%5 == 0 || i%7 == 0 || i% 11 == 0 || i%13 == 0)
-                {
-                    continue;
-                }
-                prime = true;
-                k = (int)Math.Sqrt(n);
-                for(int j=17; j<=k ; j+= 2)
-                {
-                    if (i%j == 0)
-                    {
-                        prime = false;
-                        break;
-                    }
-                }
-                
-            }
-
-            stopWatch.Stop();
-            long ts = stopWatch.ElapsedMilliseconds;
-            Console.WriteLine("Time = " + ts);
-            Console.WriteLine(k);
         }
 
         public void removeDuplicates(int n)
@@ -698,28 +640,6 @@ namespace CodeBase
                     if(match)
                     Console.WriteLine(j + " : " + sstring.Substring(j,len));
                 }
-            }
-        }
-
-        public void printPattern(int n, int k, int l)
-        {
-            //n dots total and k to l dots pattern;
-            char[,] a = new char[3,3];
-            for(int i=0; i<3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    a[i,j] = 'O';
-                }
-            }
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    Console.Write(a[i,j] + "-");
-                }
-                Console.WriteLine("");
             }
         }
 
