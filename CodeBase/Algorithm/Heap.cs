@@ -66,10 +66,61 @@ namespace CodeBase.Algorithm
             }
         }
 
+        public static void MinHeapify_Object(ListNode[] array, int index, int heapSize)
+        {
+            //push the bigger node down the chain
+            int left = 2 * index;
+            int right = 2 * index + 1;
+            int minIndex = (left < heapSize && array[left].val < array[index].val) ? left : index;
+            minIndex = (right < heapSize && array[right].val < array[minIndex].val) ? right : minIndex;
+
+            if (minIndex != index)
+            {
+                ListNode tmp = array[index];
+                array[index] = array[minIndex];
+                array[minIndex] = tmp;
+                MinHeapify_Object(array, minIndex, heapSize);
+            }
+        }
+
         public static void MinHeapInsert(int[] a, int HeapSize, int key)
         {
             a[HeapSize] = Int32.MinValue;
             HeapDecreaseKey(a, HeapSize, key);
+        }
+
+        public static void MinHeapInsert_Object(ListNode[] a, int HeapSize, ListNode node)
+        {
+            int n = HeapSize;
+            a[HeapSize] = node;
+            while ( n >= 0 && a[Parent(n)].val > a[n].val)
+            {
+                ListNode tmp = a[n];
+                a[n] = a[Parent(n)];
+                a[Parent(n)] = tmp;
+                n = Parent(n);
+            }
+        }
+
+        /// <summary>
+        /// When heap item order is changed, use index array to keep track of the original item
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="HeapSize"></param>
+        /// <param name="node"></param>
+        /// <param name="index"></param>
+        public static void MinHeapInsert_ObjectIndex(ListNode[] a, int HeapSize, ListNode node, int[] index)
+        {
+            int n = HeapSize;
+            a[HeapSize] = node;
+            while (n >= 0 && a[Parent(n)].val > a[n].val)
+            {
+                (a[Parent(n)], a[n]) = (a[n], a[Parent(n)]);
+
+                (index[Parent(n)], index[n]) = (index[n], index[Parent(n)]);
+
+                n = Parent(n);
+            }
         }
 
         public static void HeapDecreaseKey(int[] a, int i, int key)
@@ -98,6 +149,58 @@ namespace CodeBase.Algorithm
             MinHeapify(a, 0, heapSize);
             return min;
         }
+
+        /// <summary>
+        /// Mini heap pop for working on objects
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="heapSize"></param>
+        /// <returns></returns>
+        public static ListNode MinHeapPop_Object(ListNode[] a, int heapSize)
+        {
+            ListNode node = a[0];
+            a[0] = a[heapSize - 1];
+            heapSize--;
+            MinHeapify_Object(a, 0, heapSize);
+            return node;
+        }
+
+        /// <summary>
+        /// Mini heap pop for working with object and tracking of original index
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="heapSize"></param>
+        /// <returns></returns>
+        public static ListNode MinHeapPop_ObjectIndex(ListNode[] a, int heapSize, int[] index)
+        {
+            ListNode node = a[0];
+            a[0] = a[heapSize - 1];
+            index[0] = index[heapSize - 1];
+            index[heapSize - 1] = -1;
+            heapSize--;
+            MinHeapify_ObjectIndex(a, 0, heapSize, index);
+            return node;
+        }
+
+        public static void MinHeapify_ObjectIndex(ListNode[] array, int i, int heapSize, int[] index)
+        {
+            //push the bigger node down the chain
+            int left = 2 * i;
+            int right = 2 * i + 1;
+            int minIndex = (left < heapSize && array[left].val < array[i].val) ? left : i;
+            minIndex = (right < heapSize && array[right].val < array[minIndex].val) ? right : minIndex;
+
+            if (minIndex != i)
+            {
+                ListNode tmp = array[i];
+                array[i] = array[minIndex];
+                array[minIndex] = tmp;
+
+                (index[i], index[minIndex]) = (index[minIndex], index[i]);
+                MinHeapify_ObjectIndex(array, minIndex, heapSize, index);
+            }
+        }
+
         public static int MinHeapCheck(int[] a)
         {
             return a[0];

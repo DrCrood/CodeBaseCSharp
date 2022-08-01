@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace CodeBase.Algorithm
 {
-    public class ArrayList
-    {
+        public class ListNode
+        {
+            public int val;
+            public ListNode next;
+            public ListNode(int val = 0, ListNode next = null)
+            {
+                this.val = val;
+                this.next = next;
+            }
+        }
+        public class ArrayList
+        {
         /// <summary>
         /// Merge input list of intervals if there are any overlaps.
         /// </summary>
@@ -56,8 +66,72 @@ namespace CodeBase.Algorithm
         public int SumOfAllSubArrayStrength(int[] strength)
         {
 
-            return 0;
+           throw new NotImplementedException();
         }
 
+        public static ListNode MergeKSortedLists(ListNode[] lists)
+        {
+            int k = lists.Length;
+            ListNode[] heap = new ListNode[k];
+            int[] listIndex = new int[k];
+            for (int i = 0; i < k; i++) listIndex[i] = -1;
+            int heapSize = 0;
+            for (int i = 0; i < k; i++)
+            {
+                if (lists[i] != null)
+                {
+                    listIndex[heapSize] = i;
+                    Heap.MinHeapInsert_ObjectIndex(heap, heapSize, lists[i], listIndex);
+                    lists[i] = lists[i].next;
+                    heapSize++;
+                }
+            }
+            if(heapSize < 1)
+            {
+                return null;
+            }
+
+            int nextIndex = listIndex[0];
+            ListNode header = Heap.MinHeapPop_ObjectIndex(heap, heapSize, listIndex);
+            heapSize--;
+
+            if (lists[nextIndex] != null)
+            {
+                listIndex[heapSize] = nextIndex;
+                Heap.MinHeapInsert_ObjectIndex(heap, heapSize, lists[nextIndex], listIndex);
+                lists[nextIndex] = lists[nextIndex].next;
+                heapSize++;
+            }
+            ListNode tail = header;
+            while(heapSize > 0)
+            {
+                nextIndex = listIndex[0];
+                tail.next = Heap.MinHeapPop_ObjectIndex(heap, heapSize, listIndex);
+                tail = tail.next;
+                heapSize -= 1;
+                if (lists[nextIndex] != null)
+                {
+                    listIndex[heapSize] = nextIndex;
+                    Heap.MinHeapInsert_ObjectIndex(heap, heapSize, lists[nextIndex], listIndex);
+                    lists[nextIndex] = lists[nextIndex].next;
+                    heapSize++;
+                }
+            }
+
+            return header;
+        }
+
+
+        public static void StringSort(List<string> list1, List<string> list2)
+        {
+
+            //IComparer
+            list1.Sort((string a, string b) => a.Length > b.Length? 1: -1);
+
+            //Linq
+            List<string> list = list2.OrderBy(s => s.Length).ThenBy(s => s).ToList();
+
+            
+        }
     }
 }

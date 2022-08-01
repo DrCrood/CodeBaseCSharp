@@ -56,7 +56,7 @@ namespace CodeBase.Algorithm
                 {
                     high = d / 2;
                 }
-
+                //Use binary search to find the value and replace it and then loop though for sorting. 
                 while (low <= high)
                 {
                     int mid = (low + high) / 2;

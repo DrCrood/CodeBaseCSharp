@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Linq;
 
-namespace CodeBase
+namespace CodeBase.Algorithm
 {
     class ArrayOperation
     {
@@ -157,7 +157,7 @@ namespace CodeBase
 
             sw.Restart();
 
-            int max = -1 ;
+            int max = -1;
 
             GetMaxinArray(ref max, heights, 0, n - 1);
             sw.Stop();
@@ -235,7 +235,7 @@ namespace CodeBase
             }
         }
 
-        public String getPermutation(int n, int k)
+        public string getPermutation(int n, int k)
         {
             StringBuilder builder = new StringBuilder();
             List<int> digits = new List<int>();
@@ -265,7 +265,7 @@ namespace CodeBase
             }
             else
             {
-                int index = (int)Math.Ceiling((1.0 * k) / p) - 1;
+                int index = (int)Math.Ceiling(1.0 * k / p) - 1;
 
                 builder.Append(digits[index].ToString());
                 digits.RemoveAt(index);
@@ -294,63 +294,13 @@ namespace CodeBase
             return f;
         }
 
-        public void Cointoss()
-        {
-            Random ran = new Random();
-            int hh = 0;
-            int h = 0;
-            int h1 = 0;
-            int h2 = 0;
-            for (int i = 0; i < 1000000; i++)
-            {
-                int a = ran.Next(1, 3);
-                int b = ran.Next(1, 3);
-                int c = ran.Next(1, 3);
-
-                if (a == 1 || b == 1)
-                {
-                    h1++;
-                    if (a == 1 && b == 1)
-                    {
-                        h2++;
-                    }
-                }
-
-                if (c == 1)
-                {
-                    if (a == 1)
-                    {
-                        h++;
-                        if (b == 1)
-                        {
-                            hh++;
-                        }
-                    }
-                }
-                else
-                {
-                    if (b == 1)
-                    {
-                        h++;
-                        if (a == 1)
-                        {
-                            hh++;
-                        }
-                    }
-                }
-            }
-            Console.WriteLine("If we know one of them is head then " + 100 * h2 / h1 + "% chance that another is head too.");
-            Console.WriteLine("If random check and found one is head then " + Math.Round(100.0 * hh / h) + "% chance that another is head too.");
-        }
-
-
         public int activityNotifications(int[] expenditure, int d)
         {
             //using counting sort to quickly find the medium number
             int n = expenditure.Length;
             int notices = 0;
             int[] counts = new int[201];
-            for (int k = 0; k < d-1; k++)
+            for (int k = 0; k < d - 1; k++)
             {
                 counts[expenditure[k]]++;
             }
@@ -363,16 +313,16 @@ namespace CodeBase
                 MSN++;
             }
 
-            double medium = UpdateAndgetMedium(counts, MSN, expenditure[0], expenditure[d-1], even);
+            double medium = UpdateAndgetMedium(counts, MSN, expenditure[0], expenditure[d - 1], even);
             if (expenditure[d] >= 2 * medium)
             {
                 notices++;
             }
 
 
-            for (int i = d+1; i < n; i++)
+            for (int i = d + 1; i < n; i++)
             {
-                medium = UpdateAndgetMedium(counts, MSN, expenditure[i - d-1], expenditure[i - 1], even);
+                medium = UpdateAndgetMedium(counts, MSN, expenditure[i - d - 1], expenditure[i - 1], even);
                 if (expenditure[i] >= 2 * medium)
                 {
                     notices++;
@@ -423,15 +373,12 @@ namespace CodeBase
             }
 
             return 0;
-
-
-
         }
 
 
         public long largestRectangle(int[] h)
         {
-            //This function is used to find the larges of rectangle on a continus bar shape graph
+            //This function is used to find the larges rectangle on a continus bar shape graph
             //the idea is to cut the graph into subregions by the minimum value in their parent region.
 
             return FindMaxSubRegion(h, 0, h.Length - 1);
@@ -549,13 +496,13 @@ namespace CodeBase
             int nc = c.Length;
 
             long res = 0;
-            int[] astartIndex = new int[1] { na - 1 };
-            int[] cstartIndex = new int[1] { nc - 1 };
+            int astartIndex = na - 1;
+            int cstartIndex = nc - 1;
 
             for (int i = nb - 1; i >= 0; i--)
             {
-                long A = findNumbersLessThan(b[i], a, astartIndex);
-                long B = findNumbersLessThan(b[i], c, cstartIndex);
+                long A = findNumbersLessThan(b[i], a, ref astartIndex);
+                long B = findNumbersLessThan(b[i], c, ref cstartIndex);
 
                 res += A * B;
             }
@@ -564,9 +511,9 @@ namespace CodeBase
 
         }
 
-        public int findNumbersLessThan(int n, int[] a, int[] index)
+        private int findNumbersLessThan(int n, int[] a, ref int index)
         {
-            int sindex = index[0];
+            int sindex = index;
             int i = 0;
             for (i = sindex; i >= 0; i--)
             {
@@ -575,7 +522,7 @@ namespace CodeBase
                     break;
                 }
             }
-            index[0] = i;
+            index = i;
             return i + 1;
         }
 
