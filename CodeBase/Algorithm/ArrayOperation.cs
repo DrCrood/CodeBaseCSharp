@@ -294,7 +294,7 @@ namespace CodeBase.Algorithm
             return f;
         }
 
-        public int activityNotifications(int[] expenditure, int d)
+        public int ActivityNotifications(int[] expenditure, int d)
         {
             //using counting sort to quickly find the medium number
             int n = expenditure.Length;
