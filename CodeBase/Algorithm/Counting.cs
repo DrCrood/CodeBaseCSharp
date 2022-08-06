@@ -9,7 +9,7 @@ namespace CodeBase.Algorithm
     internal class Counting
     {
         /// <summary>
-        /// Count how many times the new values if exceeding the double of previous [d] days medium value.
+        /// Count how many times the new values if exceeding the double of previous [d] days median value.
         /// </summary>
         /// <param name="expenditure"></param>
         /// <param name="d"></param>
