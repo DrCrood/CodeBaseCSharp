@@ -235,65 +235,6 @@ namespace CodeBase.Algorithm
             }
         }
 
-        public string getPermutation(int n, int k)
-        {
-            StringBuilder builder = new StringBuilder();
-            List<int> digits = new List<int>();
-            for (int i = 1; i <= n; i++)
-            {
-                digits.Add(i);
-            }
-
-            getNextDigit(builder, digits, n, k);
-            return builder.ToString();
-        }
-
-        public void getNextDigit(StringBuilder builder, List<int> digits, int n, int k)
-        {
-            int p = getFactorial(n - 1);
-            if (k <= p)
-            {
-                builder.Append(digits[0].ToString());
-                digits.RemoveAt(0);
-                if (digits.Count == 1)
-                {
-                    builder.Append(digits[0].ToString());
-                    return;
-                }
-                getNextDigit(builder, digits, n - 1, k);
-
-            }
-            else
-            {
-                int index = (int)Math.Ceiling(1.0 * k / p) - 1;
-
-                builder.Append(digits[index].ToString());
-                digits.RemoveAt(index);
-                if (digits.Count == 1)
-                {
-                    builder.Append(digits[0].ToString());
-                    return;
-                }
-                k = k - index * p;
-                n = n - 1;
-                getNextDigit(builder, digits, n, k);
-            }
-        }
-
-        public int getFactorial(int n)
-        {
-            if (n <= 1)
-            {
-                return 1;
-            }
-            int f = 1;
-            for (int i = 2; i <= n; i++)
-            {
-                f = f * i;
-            }
-            return f;
-        }
-
         public int ActivityNotifications(int[] expenditure, int d)
         {
             //using counting sort to quickly find the median number

@@ -121,6 +121,55 @@ namespace CodeBase.Algorithm
             return header;
         }
 
+        /// <summary>
+        /// Get Kth permutation of input string
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public static string getKthPermutation(string s, int k)
+        {
+            int n = s.Length;
+            if(n > 20)
+            {
+                return "Error: Input string too long! Max allowed 20.";
+            }
+            StringBuilder builder = new StringBuilder();
+            List<char> clist = s.ToList();
+            GetNextChar(builder, clist, n, k);
+            return builder.ToString();
+        }
+
+        public static void GetNextChar(StringBuilder builder, List<char> chars, int n, long k)
+        {
+            long p = Utility.getFactorial(n - 1);
+            if (k <= p)
+            {
+                builder.Append(chars[0].ToString());
+                chars.RemoveAt(0);
+                if (chars.Count == 1)
+                {
+                    builder.Append(chars[0].ToString());
+                    return;
+                }
+                GetNextChar(builder, chars, n - 1, k);
+            }
+            else
+            {
+                int index = (int)Math.Ceiling(1.0 * k / p) - 1;
+
+                builder.Append(chars[index].ToString());
+                chars.RemoveAt(index);
+                if (chars.Count == 1)
+                {
+                    builder.Append(chars[0].ToString());
+                    return;
+                }
+                k = k - index * p;
+                n = n - 1;
+                GetNextChar(builder, chars, n, k);
+            }
+        }
 
         public static void StringSort(List<string> list1, List<string> list2)
         {

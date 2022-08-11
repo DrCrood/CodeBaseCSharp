@@ -8,23 +8,36 @@ namespace CodeBase.Algorithm
 {
     public static class Utility
     {
-        public static bool IsPrime(int n)
+        public static bool IsPrime(long n)
         {
-            if (n < 2)
-            {
-                return false;
-            }
-            int s = 2;
-            int e = (int)Math.Sqrt(n);
+            if (n == 2 || n == 3)
+                return true;
 
-            for (int k = s; k <= e; k++)
+            if (n <= 1 || n % 2 == 0 || n % 3 == 0)
+                return false;
+
+            int e = (int)Math.Sqrt(n);
+            for (int i = 5; i <= e; i += 6)
             {
-                if (n % k == 0)
-                {
+                if (n % i == 0 || n % (i + 2) == 0)
                     return false;
-                }
             }
+
             return true;
+        }
+
+        public static long getFactorial(int n)
+        {
+            if (n <= 1)
+            {
+                return 1;
+            }
+            long f = 1;
+            for (int i = 2; i <= n; i++)
+            {
+                f *= i;
+            }
+            return f;
         }
 
         public static double Sqrt(double n)

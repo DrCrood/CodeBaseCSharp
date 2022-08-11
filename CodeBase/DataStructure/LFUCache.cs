@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 namespace CodeBase.DataStructure
 {
     /// <summary>
-    /// Least recent used cache
+    /// Least frequent used cache
     /// </summary>
-    public class LRUCache
+    public class LFUCache
     {
         private readonly int capacity;
         LinkedList<Node> cache;
         Dictionary<int,Node> visited;
         int size = 0;
-        public LRUCache(int capacity)
+        public LFUCache(int capacity)
         {
             this.capacity = capacity;
             cache = new LinkedList<Node>();
@@ -65,7 +65,7 @@ namespace CodeBase.DataStructure
         }
     }
 
-    public class Node
+    public class Session
     {
         public int Key;
         public int Value;

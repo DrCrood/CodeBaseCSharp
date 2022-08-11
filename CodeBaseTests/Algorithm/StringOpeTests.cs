@@ -44,7 +44,21 @@ namespace CodeBaseTests.Algorithm
             string s = "ABCDE";
 
             // Act
-            var result = stringOpe.GetStringPermutation(s);
+            var result = stringOpe.GetStringPermutationInOrder(s);
+
+            // Assert
+            Assert.True(result.Count == 120);
+        }
+
+        [Fact]
+        public void StringPermutation_StateUnderTest_ExpectedBehavior()
+        {
+            // Arrange
+            var stringOpe = this.CreateStringOpe();
+            string s = "ABCDE";
+
+            // Act
+            var result = StringOpe.StringPermutation(s);
 
             // Assert
             Assert.True(result.Count == 120);

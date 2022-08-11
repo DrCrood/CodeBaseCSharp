@@ -89,13 +89,24 @@ namespace CodeBaseTests.Algorithm
         }
 
         [Fact]
+        public void getPermutation_MultipleStringSortMethods_ShouldRetuenCorrect()
+        {
+            // Arrange
+
+            // Act
+            string result = ArrayList.getKthPermutation("123456789ABCDEFGHIJK",3991680);
+
+            result.Equals("123456789KJIHGFEDCBA");
+        }
+
+        [Fact]
         public void StringSort_MultipleStringSortMethods_ShouldRetuenCorrect()
         {
             // Arrange
-            List<string> list1 = new List<string>() { "qwert", "asdfgh", "abc","ASDFGH", "ABC","QWER","CHEN"};
+            List<string> list1 = new List<string>() { "qwert", "asdfgh", "abc", "ASDFGH", "ABC", "QWER", "CHEN" };
             List<string> list2 = new List<string>() { "qwert", "asdfgh", "abc", "ASDFGH", "ABC", "QWER", "CHEN" };
             // Act
-            ArrayList.StringSort(list1,list2);
+            ArrayList.StringSort(list1, list2);
 
             this.mockRepository.VerifyAll();
         }

@@ -13,16 +13,16 @@ namespace CodeBase.Algorithm
         /// </summary>
         /// <param name="s"></param>
         /// <returns>The list of string permutation</returns>
-        public IList<string> GetStringPermutation(string s)
+        public IList<string> GetStringPermutationInOrder(string s)
         {
             int size = s.Length;
             List<string> list = new List<string>();
-            StringPermutation(list, s, 0, size);
+            StringPermutationInOrder(list, s, 0, size);
             
             return list;
         }
 
-        private void StringPermutation(List<string> list, string s, int index, int end)
+        private void StringPermutationInOrder(List<string> list, string s, int index, int end)
         {
             if(index == end-1)
             {
@@ -31,12 +31,42 @@ namespace CodeBase.Algorithm
             for(int i=index; i<end; i++)
             {
                 string str = swapChar(s, index, i);
-                StringPermutation(list, str, index + 1, end);
+                StringPermutationInOrder(list, str, index + 1, end);
             }
         }
 
+        public static List<string> StringPermutation(string s)
+        {
+            List<string> list = new List<string>();
+            List<char> charList = s.ToList();
+            int l = s.Length;
 
-        private string swapChar(string s, int i, int j)
+            list.Add(s);
+            GetPermutation(0, l, list);
+
+            return list;
+        }
+
+
+        private static void GetPermutation(int i, int j, List<string> list)
+        {
+            while(i < j)
+            {
+                List<string> nlist = new List<string>();
+                foreach(string str in list)
+                {
+                    for (int k = i + 1; k < j; k++)
+                    {
+                        string ss = swapChar(str, i, k);
+                        nlist.Add(ss);
+                    }
+                }
+                list.AddRange(nlist);
+                i++;
+            }
+        }
+
+        private static string swapChar(string s, int i, int j)
         {
             char[] a = s.ToCharArray();
             (a[j], a[i]) = (a[i], a[j]);
