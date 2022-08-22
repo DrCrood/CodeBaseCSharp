@@ -100,6 +100,30 @@ namespace CodeBaseTests.Algorithm
         }
 
         [Fact]
+        public void LongestIncreasingSubsequence_MultipleStringSortMethods_ShouldRetuenCorrect()
+        {
+            // Arrange
+            List<int> list = new List<int>() { 2,5,4,11,3,8,2,3,9,6,7,0,12,14,5,5,15,20};
+
+            // Act
+            List<int> result = ArrayList.LongestIncreasingSubsequence(list);
+
+            result.Equals(new List<int>() { 2, 3, 6, 7, 12, 14, 15, 20 });
+        }
+
+        [Fact]
+        public void LargestPermutation_MultipleStringSortMethods_ShouldRetuenCorrect()
+        {
+            // Arrange
+            List<int> list = new List<int>() { 1, 11, 5, 3, 10, 9, 6, 7, 8, 2, 4, 12 };
+
+            // Act
+            List<int> result = ArrayList.LargestPermutation(6, list);
+
+            result.Equals(new List<int>() { 12, 11, 10, 9, 8, 7, 6, 5, 3, 2, 4, 1 });
+        }
+
+        [Fact]
         public void StringSort_MultipleStringSortMethods_ShouldRetuenCorrect()
         {
             // Arrange

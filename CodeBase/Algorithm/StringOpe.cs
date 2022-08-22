@@ -333,8 +333,6 @@ namespace CodeBase.Algorithm
             int n = a.Length;
             int m = b.Length;
 
-            int[,] counts = new int[n, m];
-
             string result = GetSubMatch(a, b, 0, 0, n - 1, m - 1);
             return result;
         }
@@ -486,5 +484,55 @@ namespace CodeBase.Algorithm
             }
         }
 
+        public string LongestSubstringWithoutRepeatingCharacters(string s)
+        {
+            int start = 0;
+            int size = s.Length;
+            int maxs = 0;
+            int max = 0;
+            int length = 0;
+            Dictionary<char,int> dict = new Dictionary<char,int>();
+            for(int i = 0; i<size; i++)
+            {
+                if (dict.ContainsKey(s[i]))
+                {
+                    if(length > max)
+                    {
+                        max = length;
+                        maxs = start;
+                    }
+                    int k = dict[s[i]];
+                    for (int j = start; j <= k; j++)
+                    {
+                        dict.Remove(s[j]);
+                    }
+                    length -= k - start + 1;
+                    start = k + 1;
+                    dict[s[i]] = i;
+                    length++;
+                }
+                else
+                {
+                    dict[s[i]] = i;
+                    length++;
+                }
+            }
+            if (length > max)
+            {
+                max = length;
+                maxs = start;
+            }
+
+            return s.Substring(maxs,max);
+        }
+
+        public static List<string> StringSearchInList(List<string> directory, string key)
+        {
+            List<string> list = new List<string>();
+
+
+
+            return list;
+        }
     }
 }

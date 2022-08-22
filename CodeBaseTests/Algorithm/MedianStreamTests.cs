@@ -1,4 +1,4 @@
-﻿using CodeBase.Algorithm;
+﻿using CodeBase.DataStructure;
 using Moq;
 using System;
 using Xunit;

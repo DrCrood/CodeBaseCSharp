@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeBase.Algorithm
+namespace CodeBase.DataStructure
 {
     public class MedianStream
     {
@@ -16,21 +16,21 @@ namespace CodeBase.Algorithm
 
         public MedianStream()
         {
-            this.size = 20;
-            minHeap = new MinHeap(this.size/2);
-            maxHeap = new MaxHeap(this.size/2);
+            size = 20;
+            minHeap = new MinHeap(size / 2);
+            maxHeap = new MaxHeap(size / 2);
         }
 
         public MedianStream(int size)
         {
             this.size = size;
-            minHeap = new MinHeap(size/2);
-            maxHeap = new MaxHeap(size/2);
+            minHeap = new MinHeap(size / 2);
+            maxHeap = new MaxHeap(size / 2);
         }
 
         public void Add(int n)
         {
-            if(n >= median)
+            if (n >= median)
             {
                 minHeap.Push(n);
             }
@@ -40,25 +40,24 @@ namespace CodeBase.Algorithm
                 minHeap.Push(maxHeap.Pop());
             }
 
-            if(minHeap.Count() > maxHeap.Count())
+            if (minHeap.Count() > maxHeap.Count())
             {
                 maxHeap.Push(minHeap.Pop());
             }
             count++;
             if (count % 2 == 0)
             {
-                this.median = (minHeap.Peek() + maxHeap.Peek()) / 2.0;
+                median = (minHeap.Peek() + maxHeap.Peek()) / 2.0;
             }
             else
             {
-                this.median = maxHeap.Peek();
+                median = maxHeap.Peek();
             }
-
         }
 
         public double Get()
         {
-            return this.median;
+            return median;
         }
 
     }

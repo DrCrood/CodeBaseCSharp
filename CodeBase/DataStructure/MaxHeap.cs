@@ -4,25 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeBase.Algorithm
+namespace CodeBase.DataStructure
 {
-    public class MinHeap
+    public class MaxHeap
     {
         public int size;
         private int heapSize;
         private int[] arr;
-        public MinHeap(int size)
+        public MaxHeap(int size)
         {
             this.size = size;
-            arr = new int[size]; 
+            arr = new int[size];
         }
 
         private void IncreaseSize()
         {
-            int s = this.size;
-            this.size *= 2;
-            int[] narr = new int[this.size];
-            for(int i = 0; i < s; i++)
+            int s = size;
+            size *= 2;
+            int[] narr = new int[size];
+            for (int i = 0; i < s; i++)
             {
                 narr[i] = arr[i];
             }
@@ -31,17 +31,15 @@ namespace CodeBase.Algorithm
 
         public void Push(int n)
         {
-            if (heapSize+1 > size)
+            if (heapSize + 1 > size)
             {
-                this.IncreaseSize();
+                IncreaseSize();
             }
             arr[heapSize] = n;
             int i = heapSize;
-            while (i >= 0 && arr[Parent(i)] > arr[i])
+            while (i >= 0 && arr[Parent(i)] < arr[i])
             {
-                int tmp = arr[i];
-                arr[i] = arr[Parent(i)];
-                arr[Parent(i)] = tmp;
+                (arr[Parent(i)], arr[i]) = (arr[i], arr[Parent(i)]);
                 i = Parent(i);
             }
             heapSize++;
@@ -49,32 +47,30 @@ namespace CodeBase.Algorithm
 
         public int Pop()
         {
-            int min = arr[0];
+            int max = arr[0];
             arr[0] = arr[heapSize - 1];
             heapSize--;
-            MinHeapify(0);
-            return min;
+            MaxHeapify(0);
+            return max;
         }
 
         public int Count()
         {
-            return this.heapSize;
+            return heapSize;
         }
-
-        private void MinHeapify(int index)
+        private void MaxHeapify(int index)
         {
-            //push the bigger node down the chain
             int left = 2 * index;
             int right = 2 * index + 1;
-            int minIndex = (left < heapSize && arr[left] < arr[index]) ? left : index;
-            minIndex = (right < heapSize && arr[right] < arr[minIndex]) ? right : minIndex;
+            int maxIndex = left < heapSize && arr[left] > arr[index] ? left : index;
+            maxIndex = right < heapSize && arr[right] > arr[maxIndex] ? right : maxIndex;
 
-            if (minIndex != index)
+            if (maxIndex != index)
             {
                 int tmp = arr[index];
-                arr[index] = arr[minIndex];
-                arr[minIndex] = tmp;
-                MinHeapify(minIndex);
+                arr[index] = arr[maxIndex];
+                arr[maxIndex] = tmp;
+                MaxHeapify(maxIndex);
             }
         }
 

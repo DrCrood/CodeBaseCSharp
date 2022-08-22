@@ -198,5 +198,20 @@ namespace CodeBaseTests.Algorithm
             Assert.True(false);
             this.mockRepository.VerifyAll();
         }
+
+        [Fact]
+        public void LongestSubstringWithoutRepeatingCharacters_StateUnderTest_ExpectedBehavior()
+        {
+            // Arrange
+            var stringOpe = this.CreateStringOpe();
+            string s = "LongestSubstringLLongestSTRINGGWithoutRepeatingCharacters";
+
+            // Act
+            var result = stringOpe.LongestSubstringWithoutRepeatingCharacters(s);
+
+            // Assert
+            Assert.Equal("LongestSTRING", result);
+        }
+
     }
 }

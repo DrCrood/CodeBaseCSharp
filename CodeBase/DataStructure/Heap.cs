@@ -1,10 +1,11 @@
-﻿using System;
+﻿using CodeBase.Algorithm;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeBase.Algorithm
+namespace CodeBase.DataStructure
 {
     public static class Heap
     {
@@ -38,8 +39,8 @@ namespace CodeBase.Algorithm
             //push the smaller parent down the chain
             int left = 2 * index;
             int right = 2 * index + 1;
-            int maxIndex = (left < size && array[left] > array[index]) ? left : index;
-            maxIndex = (right < size && array[right] > array[maxIndex]) ? right : maxIndex;
+            int maxIndex = left < size && array[left] > array[index] ? left : index;
+            maxIndex = right < size && array[right] > array[maxIndex] ? right : maxIndex;
 
             if (maxIndex != index)
             {
@@ -54,8 +55,8 @@ namespace CodeBase.Algorithm
             //push the bigger node down the chain
             int left = 2 * index;
             int right = 2 * index + 1;
-            int minIndex = (left < heapSize && array[left] < array[index]) ? left : index;
-            minIndex = (right < heapSize && array[right] < array[minIndex]) ? right : minIndex;
+            int minIndex = left < heapSize && array[left] < array[index] ? left : index;
+            minIndex = right < heapSize && array[right] < array[minIndex] ? right : minIndex;
 
             if (minIndex != index)
             {
@@ -71,8 +72,8 @@ namespace CodeBase.Algorithm
             //push the bigger node down the chain
             int left = 2 * index;
             int right = 2 * index + 1;
-            int minIndex = (left < heapSize && array[left].val < array[index].val) ? left : index;
-            minIndex = (right < heapSize && array[right].val < array[minIndex].val) ? right : minIndex;
+            int minIndex = left < heapSize && array[left].val < array[index].val ? left : index;
+            minIndex = right < heapSize && array[right].val < array[minIndex].val ? right : minIndex;
 
             if (minIndex != index)
             {
@@ -85,7 +86,7 @@ namespace CodeBase.Algorithm
 
         public static void MinHeapInsert(int[] a, int HeapSize, int key)
         {
-            a[HeapSize] = Int32.MinValue;
+            a[HeapSize] = int.MinValue;
             HeapDecreaseKey(a, HeapSize, key);
         }
 
@@ -93,7 +94,7 @@ namespace CodeBase.Algorithm
         {
             int n = HeapSize;
             a[HeapSize] = node;
-            while ( n >= 0 && a[Parent(n)].val > a[n].val)
+            while (n >= 0 && a[Parent(n)].val > a[n].val)
             {
                 ListNode tmp = a[n];
                 a[n] = a[Parent(n)];
@@ -187,8 +188,8 @@ namespace CodeBase.Algorithm
             //push the bigger node down the chain
             int left = 2 * i;
             int right = 2 * i + 1;
-            int minIndex = (left < heapSize && array[left].val < array[i].val) ? left : i;
-            minIndex = (right < heapSize && array[right].val < array[minIndex].val) ? right : minIndex;
+            int minIndex = left < heapSize && array[left].val < array[i].val ? left : i;
+            minIndex = right < heapSize && array[right].val < array[minIndex].val ? right : minIndex;
 
             if (minIndex != i)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeBase.DataStructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CodeBase.Algorithm
 {
-        public class ListNode
+    public class ListNode
         {
             public int val;
             public ListNode next;
@@ -171,14 +172,91 @@ namespace CodeBase.Algorithm
             }
         }
 
+        /// <summary>
+        /// Find the longest increasing sequence in a number list
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns>comman sequence</returns>
+        public static List<int> LongestIncreasingSubsequence(List<int> nums)
+        {
+            int n = nums.Count;
+            HashSet<int> unums = new HashSet<int>(nums);
+
+            List<int> ulist = new List<int>(unums);
+
+            ulist.Sort();
+
+            List<int> result = GetSubNumMatch(ulist, nums, 0, 0, ulist.Count - 1, nums.Count - 1);
+
+            return result;
+        }
+
+        private static List<int> GetSubNumMatch(List<int> a, List<int> b, int sa, int sb, int ea, int eb)
+        {
+            List<int> l = new List<int>();
+            if (sa > ea || sb > eb)
+            {
+                return l;
+            }
+
+            if (a[sa] == b[sb])
+            {
+                l.Add(a[sa]);
+                l.AddRange(GetSubNumMatch(a, b, sa + 1, sb + 1, ea, eb));
+                return l;
+            }
+            else
+            {
+                List<int> up = GetSubNumMatch(a, b, sa + 1, sb, ea, eb);
+                List<int> down = GetSubNumMatch(a, b, sa, sb + 1, ea, eb);
+                return up.Count > down.Count ? up : down;
+            }
+        }
+        /// <summary>
+        /// Find the largest permutation by swap max k times
+        /// The arr is a array with number from 1 to arr.Count
+        /// </summary>
+        /// <param name="k"></param>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        public static List<int> LargestPermutation(int k, List<int> arr)
+        {
+            int size = arr.Count;
+            int[] lo = new int[size + 1];
+
+            for (int i = 0; i < size; i++)
+            {
+                lo[arr[i]] = i;
+            }
+            int n = size;
+            for (int j = 0; j < size && k > 0; j++)
+            {
+                if (arr[j] == n) { n--; continue; }
+
+                int jlo = lo[arr[j]];
+                int nlo = lo[n];
+
+                int tmp = arr[j];
+                arr[j] = n;
+                arr[nlo] = tmp;
+
+                lo[n] = jlo;
+                lo[tmp] = nlo;
+                n--;
+                k--;
+            }
+            return arr;
+        }
+
         public static void StringSort(List<string> list1, List<string> list2)
         {
 
             //IComparer
-            list1.Sort((string a, string b) => a.Length > b.Length? 1: -1);
+            list1.Sort((string a, string b) => a.Length - b.Length);
 
             //Linq
-            List<string> list = list2.OrderBy(s => s.Length).ThenBy(s => s).ToList();
+            list2 = list2.OrderBy(s => s.Length).ToList();
 
             
         }
